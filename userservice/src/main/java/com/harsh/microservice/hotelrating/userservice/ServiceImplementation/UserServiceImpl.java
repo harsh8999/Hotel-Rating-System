@@ -1,6 +1,7 @@
 package com.harsh.microservice.hotelrating.userservice.ServiceImplementation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
@@ -10,10 +11,12 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.harsh.microservice.hotelrating.userservice.Dto.UserDto;
+import com.harsh.microservice.hotelrating.userservice.Entity.Hotel;
 import com.harsh.microservice.hotelrating.userservice.Entity.Rating;
 import com.harsh.microservice.hotelrating.userservice.Entity.User;
 import com.harsh.microservice.hotelrating.userservice.Exception.ResourceNotFoundException;
@@ -64,8 +67,17 @@ public class UserServiceImpl implements UserService {
         List<UserDto> userDtos = new ArrayList<>();
 
         for(User user: users) {
-            ArrayList<Rating> ratingsOfUser = restTemplate.getForObject("http://localhost:8083/ratings/user/" + user.getUserId(), ArrayList.class);
-            user.setRatings(ratingsOfUser); 
+            Rating[] ratingsOfUser = restTemplate.getForObject("http://RATING-SERVICE/ratings/user/" + user.getUserId(), Rating[].class);
+            List<Rating> ratings = Arrays.stream(ratingsOfUser).toList();
+
+            ratings.stream()
+                    .map(rating -> {
+                        Hotel hotel = restTemplate.getForObject("http://HOTEL-SERVICE/hotels/" + rating.getHotelId(), Hotel.class);
+                        rating.setHotel(hotel);
+                        return rating;
+                    })
+                    .collect(Collectors.toList());
+            user.setRatings(ratings); 
             userDtos.add(this.modelMapper.map(user, UserDto.class));
         }
 
@@ -82,9 +94,19 @@ public class UserServiceImpl implements UserService {
         
         // fetch ratings from Rating Service
         // URL: http://localhost:8083/ratings/user/{userId}
-        String url = "http://localhost:8083/ratings/user/" + userId;
-        ArrayList<Rating> ratingsOfUser = restTemplate.getForObject(url, ArrayList.class);
-        user.setRatings(ratingsOfUser);
+        String url = "http://RATING-SERVICE/ratings/user/" + userId;
+        Rating[] ratingsOfUser = restTemplate.getForObject(url, Rating[].class);
+        List<Rating> ratings = Arrays.stream(ratingsOfUser).toList();
+
+        ratings.stream()
+                .map(rating -> {
+                    Hotel hotel = restTemplate.getForObject("http://HOTEL-SERVICE/hotels/" + rating.getHotelId(), Hotel.class);
+                    rating.setHotel(hotel);
+                    return rating;
+                })
+                .collect(Collectors.toList());
+
+        user.setRatings(ratings);
         
         return this.modelMapper.map(user, UserDto.class);
     }

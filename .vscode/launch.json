@@ -1,0 +1,42 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch HotelserviceApplication",
+            "request": "launch",
+            "mainClass": "com.harsh.hotelratingmicroservice.hotelservice.HotelserviceApplication",
+            "projectName": "hotelservice"
+        },
+        {
+            "type": "java",
+            "name": "Launch RatingserviceApplication",
+            "request": "launch",
+            "mainClass": "com.harsh.hotelratingmicroservice.ratingservice.RatingserviceApplication",
+            "projectName": "ratingservice"
+        },
+        {
+            "type": "java",
+            "name": "Launch ServiceregistryApplication",
+            "request": "launch",
+            "mainClass": "com.harsh.hotelratingmicroservice.serviceregistry.ServiceregistryApplication",
+            "projectName": "serviceregistry"
+        },
+        {
+            "type": "java",
+            "name": "Launch UserserviceApplication",
+            "request": "launch",
+            "mainClass": "com.harsh.microservice.hotelrating.userservice.UserserviceApplication",
+            "projectName": "userservice"
+        }
+    ]
+}
