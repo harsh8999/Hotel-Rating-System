@@ -24,7 +24,9 @@ public class RatingServiceImpl implements RatingService {
     public RatingDto create(RatingDto ratingDto) {
         Rating rating = this.modelMapper.map(ratingDto, Rating.class);
         Rating savedRating = this.ratingRepository.save(rating);
-        return this.modelMapper.map(savedRating, RatingDto.class);
+        RatingDto createdRatingDto = this.modelMapper.map(savedRating, RatingDto.class);
+        createdRatingDto.setRatingId(savedRating.getRatingId());
+        return createdRatingDto;
     }
 
     @Override
