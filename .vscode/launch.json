@@ -6,6 +6,18 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch ConfigserverApplication",
+            "request": "launch",
+            "mainClass": "com.harsh.config.server.configserver.ConfigserverApplication"
+        },
+        {
+            "type": "java",
+            "name": "Launch CongifServerApplication",
+            "request": "launch",
+            "mainClass": "com.harsh.config.server.congif_server.CongifServerApplication"
+        },
+        {
+            "type": "java",
             "name": "Launch ApigatewayApplication",
             "request": "launch",
             "mainClass": "com.harsh.hotelratingmicroservice.apigateway.ApigatewayApplication"
