@@ -1,0 +1,24 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: USER-SERVICE
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+  
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/hotel_management_microservice
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  # profiles:
+  #   active: prod
+
+  config:
+    import: configserver:http://localhost:8085
+
+  
