@@ -1,7 +1,5 @@
 package com.harsh.microservice.hotelrating.userservice.ServiceImplementation;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -10,7 +8,7 @@ import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+// import org.springframework.web.client.RestTemplate;
 
 import com.harsh.microservice.hotelrating.userservice.Dto.UserDto;
 import com.harsh.microservice.hotelrating.userservice.Entity.Hotel;
@@ -31,8 +29,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     ModelMapper modelMapper;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    // @Autowired
+    // private RestTemplate restTemplate;
 
     @Autowired
     private HotelService hotelService; 

@@ -6,6 +6,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch ApigatewayApplication",
+            "request": "launch",
+            "mainClass": "com.harsh.hotelratingmicroservice.apigateway.ApigatewayApplication"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"
