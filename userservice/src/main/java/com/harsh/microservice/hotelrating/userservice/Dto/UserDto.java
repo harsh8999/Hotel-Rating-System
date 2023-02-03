@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 import com.harsh.microservice.hotelrating.userservice.Entity.Rating;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class UserDto {
     private String userId;
 

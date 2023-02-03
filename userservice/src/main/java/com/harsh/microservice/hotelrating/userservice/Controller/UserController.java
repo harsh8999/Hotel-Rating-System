@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.harsh.microservice.hotelrating.userservice.Dto.UserDto;
 import com.harsh.microservice.hotelrating.userservice.Service.UserService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -26,15 +28,29 @@ public class UserController {
     UserService userService;
 
     @PostMapping
+    @CircuitBreaker(name = "ratingHotelBreaker", fallbackMethod = "ratingHotelFallback")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         UserDto createdUserDto = this.userService.createUser(userDto);
         return new ResponseEntity<UserDto>(createdUserDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/{userId}")
+    @CircuitBreaker(name = "ratingHotelBreaker", fallbackMethod = "ratingHotelFallback")
     public ResponseEntity<UserDto> getUser(@PathVariable String userId) {
         UserDto userDto = this.userService.getUser(userId);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
+
+    // fall back methods
+    public ResponseEntity<UserDto> ratingHotelFallback(String userId, Exception ex) {
+        System.out.println("Fallback is executed because service is down: "+ ex.getMessage());
+        UserDto userDto = UserDto.builder()
+                                    .userId("12345")
+                                    .email("dummy@gmail.com")
+                                    .about("This is dummy")
+                                    .name("Dummy")
+                                    .build();
+        return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
     }
 
     @GetMapping
